@@ -1,3 +1,3 @@
 from tkinter import *
 
-pr
+pri
