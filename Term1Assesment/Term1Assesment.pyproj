@@ -4,7 +4,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>5d2dd33e-c2f5-4d73-b9d2-022fb59d30fb</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>Term1Assesment.py</StartupFile>
+    <StartupFile>term_1_assesment.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -21,7 +21,9 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Term1Assesment.py" />
+    <Compile Include="create_questions.py" />
+    <Compile Include="login_create.py" />
+    <Compile Include="term_1_assesment.py" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in
