@@ -1,5 +1,6 @@
 from tkinter import *
 from PIL import ImageTk, Image
+from create_questions import main
 
 
 
@@ -39,7 +40,8 @@ def login(login_btn, create_btn, title_lbl, root):
     password_input.place(relx=0.5, rely=0.6, relwidth=0.31, relheight=0.08, anchor='center')
     hide_show_btn.place(relx=0.7, rely=0.6, relwidth=0.075, relheight=0.08, anchor='center')
 
-    submit_btn = Button(root, text="Login")
+    submit_btn = Button(root, text="Login", command=lambda: main(root, title_lbl, nesa_lbl, password_lbl, nesa_input, password_input, submit_btn, hide_show_btn))
+    submit_btn.place(relx=0.3, rely=0.8, relwidth=0.11, relheight=0.08, anchor='e')
     
     nesa_lbl.place(relx=0.3, rely=0.5, relwidth=0.11, relheight=0.08, anchor='e')
     password_lbl.place(relx=0.3, rely=0.6, relwidth=0.11, relheight=0.08, anchor='e')
