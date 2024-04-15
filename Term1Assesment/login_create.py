@@ -6,8 +6,6 @@ def login(login_btn, create_btn, title_lbl, root):
     login_btn.destroy()
     create_btn.destroy()
     title_lbl.destroy()
-
-    hide213 = True
     
     def show():
         hide_show_btn.config(command=lambda:hide(), text="Hide")   

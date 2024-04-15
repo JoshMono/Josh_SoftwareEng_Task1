@@ -10,10 +10,7 @@ class Question:
         self.root = root
         self.answer = answer
         self.choices = choices
-        # self.ans1 = ans1
-        # self.ans2 = ans2
-        # self.ans3 = ans3
-    
+  
     def __str__(self) -> str:
         return F"Question Text: {self.question_text}"
     
@@ -61,17 +58,18 @@ def multiple_choice(question):
     question_lbl.place(relx=0.5, rely=0.3, anchor='center')
     
     group = tk.IntVar()
+    group.set(0)
     
-    answer_1 = tk.Radiobutton(question.root, text="Option 1", variable=group, value=1)
+    answer_1 = tk.Radiobutton(question.root, text="Option 1", variable=group, value=1, indicatoron = 1)
     answer_1.place(relx=0.2, rely=0.6, anchor='center')
     
-    answer_2 = tk.Radiobutton(question.root, text="Option 2", variable=group, value=2)
+    answer_2 = tk.Radiobutton(question.root, text="Option 2", variable=group, value=2, indicatoron = 1)
     answer_2.place(relx=0.4, rely=0.6, anchor='center')
     
-    answer_3 = tk.Radiobutton(question.root, text="Option 3", variable=group, value=3)
+    answer_3 = tk.Radiobutton(question.root, text="Option 3", variable=group, value=3, indicatoron = 1)
     answer_3.place(relx=0.6, rely=0.6, anchor='center')
     
-    answer_4 = tk.Radiobutton(question.root, text="Option 4", variable=group, value=4)
+    answer_4 = tk.Radiobutton(question.root, text="Option 4", variable=group, value=4, indicatoron = 1)
     answer_4.place(relx=0.8, rely=0.6, anchor='center')
     
     radio_list = [answer_1, answer_2, answer_3, answer_4]

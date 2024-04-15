@@ -4,7 +4,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>5d2dd33e-c2f5-4d73-b9d2-022fb59d30fb</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>term_1_assesment.py</StartupFile>
+    <StartupFile>main.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -23,7 +23,7 @@
   <ItemGroup>
     <Compile Include="create_questions.py" />
     <Compile Include="login_create.py" />
-    <Compile Include="term_1_assesment.py" />
+    <Compile Include="main.py" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="images\" />
