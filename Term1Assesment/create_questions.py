@@ -18,7 +18,7 @@ class Question:
     
     def get_question_type(self):
         if self.type_of_question == 'multi':
-            return multiple_choice(self)
+            return multiple_choice, self
         
         elif self.type_of_question == 'fill':
             return fill_blank()
@@ -26,10 +26,7 @@ class Question:
         else:
             return rank_order()
 
-    def create_page(self):
-        self.get_question_type()
-
-def main(root, a, b, c, d, e, f, g):
+def main(root, current_user):
     all_questions = []
     from questions_data import QUESTIONS
     for question in QUESTIONS:
@@ -42,19 +39,22 @@ def main(root, a, b, c, d, e, f, g):
             choices=question.get('choices')
             )
         all_questions.append(q)
-
-    a.destroy()
-    b.destroy()
-    c.destroy()
-    d.destroy()
-    e.destroy()
-    f.destroy()
-    g.destroy()
+        
+    score = 0
+    total = 0
     
-    give_question(all_questions)
+    for question in all_questions:
+        total += question.difficulty
+        
+    score_lbl = tk.Label(root, text=f"{score}/{total}")
+    score_lbl.place(relx=0.9, rely=0.1)
+    
+    
+    
+    give_question(all_questions, current_user, score, total, score_lbl)
 
 
-def multiple_choice(question):
+def multiple_choice(question, all_questions, current_user, score, total, score_lbl):
     
     question_lbl = tk.Label(question.root, text=question.question_text)
     question_lbl.place(relx=0.5, rely=0.3, anchor='center')
@@ -82,15 +82,32 @@ def multiple_choice(question):
         temp_answer = question.choices.pop(random2_num)
         radio_btn.config(text=f"{temp_answer}", value=f"{temp_answer}")
         
-    submit_btn = tk.Button(question.root, text="Submit", command= lambda: submit_value(question, group.get()))
+    submit_btn = tk.Button(question.root, text="Submit", command=lambda: submit_value(question, group.get(), score, total, score_lbl))
     submit_btn.place(relx=0.5, rely=0.75, anchor="center")
     
-    def submit_value(question, selected):
+    def submit_value(question, selected, score, total, score_lbl):
         if question.answer == selected:
             print("right")
+            answer_1.destroy()
+            answer_2.destroy()
+            answer_3.destroy()
+            answer_4.destroy()
+            submit_btn.destroy()
+            question_lbl.destroy()
             
+            score += question.difficulty
+            
+            give_question(all_questions, current_user, score, total, score_lbl)
         else:
             print("wrong")
+            answer_1.destroy()
+            answer_2.destroy()
+            answer_3.destroy()
+            answer_4.destroy()
+            submit_btn.destroy()
+            question_lbl.destroy()
+            
+            give_question(all_questions, current_user, score, total, score_lbl)
             
         
         
@@ -103,10 +120,16 @@ def rank_order():
     pass
 
 
-def give_question(all_questions):
-    random_num = rand.randint(0, len(all_questions) - 1)
-    question = all_questions.pop(random_num)
-    question.create_page()
+def give_question(all_questions, current_user, score, total, score_lbl):
+    if len(all_questions) == 0:
+        score_lbl.config(text=f"{score}/{total}")
+        print(score)
+    else:
+        score_lbl.config(text=f"{score}/{total}")
+        random_num = rand.randint(0, len(all_questions) - 1)
+        question = all_questions.pop(random_num)
+        func, self = question.get_question_type()
+        func(self, all_questions, current_user, score, total, score_lbl)
 
 
 
