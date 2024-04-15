@@ -24,6 +24,7 @@
     <Compile Include="create_questions.py" />
     <Compile Include="login_create.py" />
     <Compile Include="main.py" />
+    <Compile Include="questions_data.py" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="images\" />
