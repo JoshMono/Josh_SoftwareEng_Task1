@@ -57,19 +57,18 @@ def multiple_choice(question):
     question_lbl = tk.Label(question.root, text=question.question_text)
     question_lbl.place(relx=0.5, rely=0.3, anchor='center')
     
-    group = tk.IntVar()
-    group.set(0)
+    group = tk.StringVar()
     
-    answer_1 = tk.Radiobutton(question.root, text="Option 1", variable=group, value=1, indicatoron = 1)
+    answer_1 = tk.Radiobutton(question.root, text="Option 1", variable=group, tristatevalue=0)
     answer_1.place(relx=0.2, rely=0.6, anchor='center')
     
-    answer_2 = tk.Radiobutton(question.root, text="Option 2", variable=group, value=2, indicatoron = 1)
+    answer_2 = tk.Radiobutton(question.root, text="Option 2", variable=group, tristatevalue=0)
     answer_2.place(relx=0.4, rely=0.6, anchor='center')
     
-    answer_3 = tk.Radiobutton(question.root, text="Option 3", variable=group, value=3, indicatoron = 1)
+    answer_3 = tk.Radiobutton(question.root, text="Option 3", variable=group, tristatevalue=0)
     answer_3.place(relx=0.6, rely=0.6, anchor='center')
     
-    answer_4 = tk.Radiobutton(question.root, text="Option 4", variable=group, value=4, indicatoron = 1)
+    answer_4 = tk.Radiobutton(question.root, text="Option 4", variable=group, tristatevalue=0)
     answer_4.place(relx=0.8, rely=0.6, anchor='center')
     
     radio_list = [answer_1, answer_2, answer_3, answer_4]
@@ -79,7 +78,19 @@ def multiple_choice(question):
         random2_num = rand.randint(0, len(question.choices) - 1)
         radio_btn = radio_list.pop(random1_num)
         temp_answer = question.choices.pop(random2_num)
-        radio_btn.config(text=f"{temp_answer}")
+        radio_btn.config(text=f"{temp_answer}", value=f"{temp_answer}")
+        
+    submit_btn = tk.Button(question.root, text="Submit", command= lambda: submit_value(question, group.get()))
+    submit_btn.place(relx=0.5, rely=0.75, anchor="center")
+    
+    def submit_value(question, selected):
+        if question.answer == selected:
+            print("right")
+            
+        else:
+            print("wrong")
+            
+        
         
         
     
