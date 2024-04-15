@@ -83,31 +83,30 @@ def multiple_choice(question, all_questions, current_user, score, total, score_l
         radio_btn.config(text=f"{temp_answer}", value=f"{temp_answer}")
         
     submit_btn = tk.Button(question.root, text="Submit", command=lambda: submit_value(question, group.get(), score, total, score_lbl))
-    submit_btn.place(relx=0.5, rely=0.75, anchor="center")
+    submit_btn.place(relx=0.5, rely=0.75, relwidth=0.11, relheight=0.08, anchor="center")
     
+    def new_question(score, total, score_lbl, correct_lbl):
+        give_question(all_questions, current_user, score, total, score_lbl)
+        submit_btn.destroy()
+        answer_1.destroy()
+        answer_2.destroy()
+        answer_3.destroy()
+        answer_4.destroy()
+        question_lbl.destroy()
+        correct_lbl.destroy()
+        
     def submit_value(question, selected, score, total, score_lbl):
         if question.answer == selected:
-            print("right")
-            answer_1.destroy()
-            answer_2.destroy()
-            answer_3.destroy()
-            answer_4.destroy()
-            submit_btn.destroy()
-            question_lbl.destroy()
             
+            correct_lbl = tk.Label(question.root, text="Correct")
+            correct_lbl.place(relx=0.5, rely=0.5, anchor='center')
             score += question.difficulty
-            
-            give_question(all_questions, current_user, score, total, score_lbl)
+            submit_btn.config(text="Next", command=lambda: new_question(score, total, score_lbl, correct_lbl), bg="spring green")
         else:
-            print("wrong")
-            answer_1.destroy()
-            answer_2.destroy()
-            answer_3.destroy()
-            answer_4.destroy()
-            submit_btn.destroy()
-            question_lbl.destroy()
             
-            give_question(all_questions, current_user, score, total, score_lbl)
+            incorrect_lbl = tk.Label(question.root, text="Incorrect")
+            incorrect_lbl.place(relx=0.5, rely=0.5, anchor='center')
+            submit_btn.config(text="Next", command=lambda: new_question(score, total, score_lbl, incorrect_lbl), bg="red")
             
         
         
