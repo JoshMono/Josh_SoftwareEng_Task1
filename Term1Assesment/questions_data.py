@@ -34,12 +34,5 @@ QUESTIONS = [
          "100",
          "1000"
      ]
-     },
-    #  {"question_id": 4,
-    #  "question_text": "What is the day after Sunday",
-    #  "difficulty": 3,
-    #  "type_of_question": "fill",
-    #  "answer": "Monday"
-    #  },
 
 ]
