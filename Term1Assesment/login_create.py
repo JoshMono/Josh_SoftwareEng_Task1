@@ -1,7 +1,6 @@
 import tkinter as tk
 from tkinter import messagebox
-from turtle import back, title
-from create_questions import main
+from user_menu import create_user_interface
 import json
 
 class User():
@@ -98,9 +97,7 @@ def login(login_btn, create_btn, title_lbl, root):
                     hide_show_btn.destroy()
                     back_btn.destroy()
 
-                    user = User(current_user["nesa"], current_user["f_name"], current_user["l_name"],
-                               current_user["password"], current_user["marks"], current_user["taken_test"])
-                    main(root, user)
+                    create_user_interface(root, current_user)
             
         
                 else:
@@ -203,8 +200,8 @@ def create_account(login_btn, create_btn, title_lbl, root):
                     l_name_lbl.destroy()
                     submit_data_btn.destroy()
                     hide_show_btn.destroy()
-                        
-                    main(root, current_user)
+                    back_btn.destroy()
+                    create_user_interface(root, current_user)
                     
                 else:
                     dict = json.loads(data)
@@ -234,8 +231,8 @@ def create_account(login_btn, create_btn, title_lbl, root):
                         l_name_lbl.destroy()
                         submit_data_btn.destroy()
                         hide_show_btn.destroy()
-                        
-                        main(root, user)
+                        back_btn.destroy()
+                        create_user_interface(root, current_user)
                         
                     else:
                         tk.messagebox.showwarning("Info", "Your NESA id is already in use")
@@ -253,8 +250,8 @@ def create_account(login_btn, create_btn, title_lbl, root):
                     l_name_lbl.destroy()
                     submit_data_btn.destroy()
                     hide_show_btn.destroy()
-                        
-                    main(root, current_user)
+                    back_btn.destroy()
+                    create_user_interface(root, current_user)
         
         else:
             tk.messagebox.showwarning("Info", "Your NESA id can only be numbers")

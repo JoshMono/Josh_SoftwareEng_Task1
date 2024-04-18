@@ -25,6 +25,7 @@
     <Compile Include="login_create.py" />
     <Compile Include="main.py" />
     <Compile Include="questions_data.py" />
+    <Compile Include="user_menu.py" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="images\" />

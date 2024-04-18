@@ -34,5 +34,12 @@ QUESTIONS = [
          "100",
          "1000"
      ]
+     },
+     {"question_id": 4,
+     "question_text": "Hash  _ _ _ _ _?",
+     "difficulty": 3,
+     "type_of_question": "fill",
+     "answer": "table",
+     }
 
 ]
