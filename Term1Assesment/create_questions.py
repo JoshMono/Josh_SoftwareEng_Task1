@@ -1,6 +1,6 @@
 import tkinter as tk
 import random as rand
-
+from tkinter import messagebox
 
 
 
@@ -12,9 +12,6 @@ class Question:
         self.root = root
         self.answer = answer
         self.choices = choices
-  
-    def __str__(self) -> str:
-        return F"Question Text: {self.question_text}"
     
     def get_question_type(self):
         if self.type_of_question == 'multi':
@@ -97,15 +94,17 @@ def multiple_choice(question, all_questions, current_user, score, total, score_l
         correct_lbl.destroy()
         
     def submit_value(question, selected, score, total, score_lbl):
-        if question.answer == selected:
+        if selected == '':
+            tk.messagebox.showwarning("Info", "You must answer the question")
             
+        elif question.answer == selected:
             correct_lbl = tk.Label(question.root, text="Correct")
             correct_lbl.place(relx=0.5, rely=0.5, anchor='center')
             score += question.difficulty
             score_lbl.config(text=f"{score}/{total}")
             submit_btn.config(text="Next", command=lambda: new_question(score, total, score_lbl, correct_lbl, question.root), bg="spring green")
+        
         else:
-            
             incorrect_lbl = tk.Label(question.root, text="Incorrect")
             incorrect_lbl.place(relx=0.5, rely=0.5, anchor='center')
             submit_btn.config(text="Next", command=lambda: new_question(score, total, score_lbl, incorrect_lbl, question.root), bg="red")
@@ -114,10 +113,10 @@ def multiple_choice(question, all_questions, current_user, score, total, score_l
     
 def fill_blank(question, all_questions, current_user, score, total, score_lbl):
     title_lbl = tk.Label(question.root, text="Fill in the Blank", font=30)
-    title_lbl.place(relx=0.5, rely=0.3, anchor='center')
+    title_lbl.place(relx=0.5, rely=0.2, anchor='center')
     
     question_lbl = tk.Label(question.root, text=f"Question: {question.question_text}")
-    question_lbl.place(relx=0.5, rely=0.5, anchor='center')
+    question_lbl.place(relx=0.5, rely=0.4, anchor='center')
     
     answer_field = tk.Entry(question.root)
     answer_field.place(relx=0.5, rely=0.6, relwidth=0.12, anchor='center')
@@ -126,13 +125,19 @@ def fill_blank(question, all_questions, current_user, score, total, score_lbl):
     submit_btn.place(relx=0.5, rely=0.75, relwidth=0.11, relheight=0.08, anchor="center")
     
     def submit_value(question, score, total, score_lbl):
-        if question.answer == answer_field.get().lower():
+        if answer_field.get() == '':
+            tk.messagebox.showwarning("Info", "You must answer the question")
+        elif question.answer == answer_field.get().lower():
             correct_lbl = tk.Label(question.root, text="Correct")
             correct_lbl.place(relx=0.5, rely=0.5, anchor='center')
             score += question.difficulty
             score_lbl.config(text=f"{score}/{total}")
             submit_btn.config(text="Next", command=lambda: new_question(score, total, score_lbl, correct_lbl, question.root), bg="spring green")
-    
+        else:
+            incorrect_lbl = tk.Label(question.root, text="Incorrect")
+            incorrect_lbl.place(relx=0.5, rely=0.5, anchor='center')
+            submit_btn.config(text="Next", command=lambda: new_question(score, total, score_lbl, incorrect_lbl, question.root), bg="red")
+            
     def new_question(score, total, score_lbl, correct_lbl, root):
         give_question(all_questions, current_user, score, total, score_lbl, root)
         submit_btn.destroy()
