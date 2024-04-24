@@ -1,4 +1,6 @@
+import select
 import tkinter as tk
+from tkinter.ttk import Treeview
 import random as rand
 from tkinter import messagebox
 
@@ -21,7 +23,7 @@ class Question:
             return fill_blank, self
         
         else:
-            return rank_order()
+            return rank_order, self
 
 def main(root, current_user):
     all_questions = []
@@ -146,9 +148,84 @@ def fill_blank(question, all_questions, current_user, score, total, score_lbl):
         title_lbl.destroy()
         correct_lbl.destroy()
 
-def rank_order():
-    pass
+def rank_order(question, all_questions, current_user, score, total, score_lbl):
+    title_lbl = tk.Label(question.root, text="Rank in Order", font=30)
+    title_lbl.place(relx=0.5, rely=0.2, anchor='center')
+    
+    question_lbl = tk.Label(question.root, text=f"Question: {question.question_text}")
+    question_lbl.place(relx=0.5, rely=0.4, anchor='center')
+    
+    choice_tree = Treeview(question.root, selectmode='browse')
+    choice_tree.place(relx=0.5, rely=0.7, relwidth=0.32, relheight=0.5, anchor='center')
+    choice_tree['columns'] = ("1")
+    choice_tree['show'] = 'headings'
+    choice_tree.column('1', anchor='w', width=30)
+    choice_tree.heading('1', text='Rank Order', anchor='center')
+    
+    choices_list = question.choices.copy()
+    
+    for choice in question.choices:
+       num = rand.randint(0, len(choices_list) - 1)
+       ran_choice = choices_list.pop(num)
+       choice_tree.insert("", 'end', values=(ran_choice))
+       
+    move_up_btn = tk.Button(question.root, text="Move Up", command=lambda: move_up())
+    move_up_btn.place(relx=0.2, rely=0.55, relwidth=0.15, relheight=0.08, anchor='center')
+    
+    move_down_btn = tk.Button(question.root, text="Move Down", command=lambda: move_down())
+    move_down_btn.place(relx=0.2, rely=0.75, relwidth=0.15, relheight=0.08, anchor='center')
+    
+    submit_btn = tk.Button(question.root, text="Submit", command=lambda: submit(score, total, score_lbl))
+    submit_btn.place(relx=0.8, rely=0.65, relwidth=0.15, relheight=0.08, anchor='center')
 
+    def move_up():
+        try:
+            selected = choice_tree.selection()
+            choice_tree.move(selected, choice_tree.parent(selected), choice_tree.index(selected) - 1)
+        except:
+            tk.messagebox.showwarning("Info", "You must select a row")
+        
+    def move_down():
+        try:
+            selected = choice_tree.selection()
+            choice_tree.move(selected, choice_tree.parent(selected), choice_tree.index(selected) + 1)
+        except:
+            tk.messagebox.showwarning("Info", "You must select a row")
+    
+    def new_question(score, total, score_lbl, correct_lbl, root):
+        title_lbl.destroy()
+        question_lbl.destroy()
+        choice_tree.destroy()
+        correct_lbl.destroy()
+        move_down_btn.destroy()
+        move_up_btn.destroy()
+        submit_btn.destroy()
+        give_question(all_questions, current_user, score, total, score_lbl, root)
+
+    def submit(score, total, score_lbl):
+        all_choices = choice_tree.get_children()
+        answer_choices = question.choices
+        num = 0
+        correct = True
+        for i in all_choices:
+            item = choice_tree.item(i)
+            text = item.get('values')[0]
+            a = answer_choices[num]
+            if str(text) != a:
+                correct = False
+                break
+            num += 1
+            
+        if correct:
+            correct_lbl = tk.Label(question.root, text="Correct")
+            correct_lbl.place(relx=0.5, rely=0.3, anchor='center')
+            score += question.difficulty
+            score_lbl.config(text=f"{score}/{total}")
+            submit_btn.config(text="Next", command=lambda: new_question(score, total, score_lbl, correct_lbl, question.root), bg="spring green")
+        else: 
+            incorrect_lbl = tk.Label(question.root, text="Incorrect")
+            incorrect_lbl.place(relx=0.5, rely=0.3, anchor='center')
+            submit_btn.config(text="Next", command=lambda: new_question(score, total, score_lbl, incorrect_lbl, question.root), bg="red")
 
 def give_question(all_questions, current_user, score, total, score_lbl, root):
     if len(all_questions) == 0:

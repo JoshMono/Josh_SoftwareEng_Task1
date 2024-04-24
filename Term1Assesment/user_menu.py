@@ -22,10 +22,10 @@ def create_user_interface(root, current_user):
        i+=1
        
 
-    start_test_btn = tk.Button(root, text="Start Test", command=lambda: run_test(root, current_user))
+    start_test_btn = tk.Button(root, text="Start Test", command=lambda: run_questions(root, current_user))
     start_test_btn.place(relx=0.05, rely=0.18)
     
-    def run_test(root, current_user):
+    def run_questions(root, current_user):
         welcome_lbl.destroy()
         mark_list.destroy()
         start_test_btn.destroy()

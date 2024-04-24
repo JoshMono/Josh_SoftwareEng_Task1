@@ -40,6 +40,18 @@ QUESTIONS = [
      "difficulty": 3,
      "type_of_question": "fill",
      "answer": "table",
+     },
+     {"question_id": 5,
+     "question_text": "Rank in Order?",
+     "difficulty": 3,
+     "type_of_question": "rank",
+     "answer": ["1", "2", "3", "4"],
+     "choices": [
+         "1",
+         "2",
+         "3",
+         "4"
+     ]
      }
 
 ]
