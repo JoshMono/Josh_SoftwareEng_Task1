@@ -3,7 +3,7 @@ from tkinter.ttk import Treeview
 from create_questions import main
 
 def create_user_interface(root, current_user):
-    welcome_lbl = tk.Label(root, text=f"Welcome {current_user["f_name"]}", font=40)
+    welcome_lbl = tk.Label(root, text=f"Welcome {current_user['f_name']}", font=40)
     welcome_lbl.place(relx=0.05, rely=0.08, anchor='w')
     
     mark_list = Treeview(root, selectmode='browse')
