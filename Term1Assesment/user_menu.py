@@ -46,6 +46,9 @@ def create_user_interface(root, current_user):
     start_test_btn = tk.Button(root, text="Start Test", command=lambda: run_questions(root, current_user))
     start_test_btn.place(relx=0.05, rely=0.18)
     
+    quit_btn = tk.Button(root, text="Quit", command=lambda: root.destroy())
+    quit_btn.place(relx=0.2, rely=0.18)
+    
     i=1
     attempt_list = []
     mark_list = []
@@ -74,5 +77,9 @@ def create_user_interface(root, current_user):
         mark_list_tree.destroy()
         start_test_btn.destroy()
         canvas.get_tk_widget().destroy()
+        marks_lbl.destroy()
+        attemps_lbl.destroy()
+        graph_lbl.destroy()
+        quit_btn.destroy()
         main(root, current_user)
         
