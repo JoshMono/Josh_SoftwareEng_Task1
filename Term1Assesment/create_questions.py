@@ -1,9 +1,12 @@
+from os import replace
 from re import S
 import select
 import tkinter as tk
 from tkinter.ttk import Treeview
 import random as rand
 from tkinter import messagebox
+
+from numpy import number
 
 
 
@@ -63,22 +66,44 @@ def main(root, current_user):
 
 def multiple_choice(question, all_questions, current_user, score, total, score_lbl, question_num, question_num_lbl, amount_of_questions, score_header_lbl, question_num_header_lbl):
     
+    if question.question_text.__contains__('$'):
+        number_answer = rand.randint(0,255)
+        answer = str(format(number_answer, '#010b')).replace("0b", "")
+        question.question_text = question.question_text.replace("$", str(number_answer))
+        question.choices = []
+        for i in range(3):
+            temp_ans = ""
+            a = True
+            while a == True:
+                for _ in range(8):
+                    temp_num = rand.randint(0,1)
+                    temp_ans += str(temp_num)
+                if temp_ans == answer or temp_ans in question.choices:
+                    print(temp_ans)
+                    temp_ans = ""
+                else:
+                    a = False
+                    question.choices.append(temp_ans)
+
+        question.choices.append(answer)
+        question.answer = answer
+
     question_lbl = tk.Label(question.root, text=question.question_text, font=30)
     question_lbl.place(relx=0.5, rely=0.3, anchor='center')
     
     group = tk.StringVar()
     
     answer_1 = tk.Radiobutton(question.root, text="Option 1", variable=group, tristatevalue=0)
-    answer_1.place(relx=0.2, rely=0.6, anchor='center')
+    answer_1.place(relx=0.5, rely=0.4, anchor='center')
     
     answer_2 = tk.Radiobutton(question.root, text="Option 2", variable=group, tristatevalue=0)
-    answer_2.place(relx=0.4, rely=0.6, anchor='center')
+    answer_2.place(relx=0.5, rely=0.48, anchor='center')
     
     answer_3 = tk.Radiobutton(question.root, text="Option 3", variable=group, tristatevalue=0)
-    answer_3.place(relx=0.6, rely=0.6, anchor='center')
+    answer_3.place(relx=0.5, rely=0.56, anchor='center')
     
     answer_4 = tk.Radiobutton(question.root, text="Option 4", variable=group, tristatevalue=0)
-    answer_4.place(relx=0.8, rely=0.6, anchor='center')
+    answer_4.place(relx=0.5, rely=0.64, anchor='center')
     
     mark_lbl = tk.Label(question.root, text=f"Difficulty")
     mark_lbl.place(relx=0.1, rely=0.1, anchor='center')
@@ -116,19 +141,29 @@ def multiple_choice(question, all_questions, current_user, score, total, score_l
             
         elif question.answer == selected:
             correct_lbl = tk.Label(question.root, text="Correct")
-            correct_lbl.place(relx=0.5, rely=0.5, anchor='center')
+            correct_lbl.place(relx=0.5, rely=0.22, anchor='center')
             score += question.difficulty
             score_lbl.config(text=f"{score}/{total}")
             submit_btn.config(text="Next", command=lambda: new_question(score, total, score_lbl, correct_lbl, question.root, question_num, question_num_lbl, amount_of_questions, score_header_lbl, question_num_header_lbl), bg="spring green")
         
         else:
             incorrect_lbl = tk.Label(question.root, text="Incorrect")
-            incorrect_lbl.place(relx=0.5, rely=0.5, anchor='center')
+            incorrect_lbl.place(relx=0.5, rely=0.22, anchor='center')
             submit_btn.config(text="Next", command=lambda: new_question(score, total, score_lbl, incorrect_lbl, question.root, question_num, question_num_lbl, amount_of_questions, score_header_lbl, question_num_header_lbl), bg="red")
             
         
     
 def fill_blank(question, all_questions, current_user, score, total, score_lbl, question_num, question_num_lbl, amount_of_questions, score_header_lbl, question_num_header_lbl):
+    
+    if question.question_text.__contains__('$$$$'):
+        new_binary_num = ""
+        for i in range(4):
+            temp_num = rand.randint(0,1)
+            new_binary_num += str(temp_num)
+        question.question_text = question.question_text.replace("$$$$", new_binary_num)
+        question.answer = str(int(new_binary_num, 2))
+        
+
     title_lbl = tk.Label(question.root, text="Fill in the Blank", font=30)
     title_lbl.place(relx=0.5, rely=0.2, anchor='center')
     
@@ -146,6 +181,8 @@ def fill_blank(question, all_questions, current_user, score, total, score_lbl, q
     submit_btn = tk.Button(question.root, text="Submit", command=lambda: submit_value(question, score, total, score_lbl, question_num, question_num_lbl, amount_of_questions, score_header_lbl, question_num_header_lbl))
     submit_btn.place(relx=0.5, rely=0.75, relwidth=0.11, relheight=0.08, anchor="center")
     
+    
+
     def submit_value(question, score, total, score_lbl, question_num, question_num_lbl, amount_of_questions, score_header_lbl, question_num_header_lbl):
         if answer_field.get() == '':
             tk.messagebox.showwarning("Info", "You must answer the question")
@@ -175,10 +212,10 @@ def rank_order(question, all_questions, current_user, score, total, score_lbl, q
     title_lbl.place(relx=0.5, rely=0.2, anchor='center')
     
     question_lbl = tk.Label(question.root, text=f"Question: {question.question_text}")
-    question_lbl.place(relx=0.5, rely=0.4, anchor='center')
+    question_lbl.place(relx=0.5, rely=0.28, anchor='center')
     
     choice_tree = Treeview(question.root, selectmode='browse')
-    choice_tree.place(relx=0.5, rely=0.7, relwidth=0.32, relheight=0.5, anchor='center')
+    choice_tree.place(relx=0.5, rely=0.7, relwidth=0.34, anchor='center')
     choice_tree['columns'] = ("1")
     choice_tree['show'] = 'headings'
     choice_tree.column('1', anchor='w', width=30)
@@ -194,7 +231,7 @@ def rank_order(question, all_questions, current_user, score, total, score_lbl, q
     for choice in question.choices:
        num = rand.randint(0, len(choices_list) - 1)
        ran_choice = choices_list.pop(num)
-       choice_tree.insert("", 'end', values=(ran_choice))
+       choice_tree.insert("", 'end', values=[f"{ran_choice}"])
        
     move_up_btn = tk.Button(question.root, text="Move Up", command=lambda: move_up())
     move_up_btn.place(relx=0.2, rely=0.55, relwidth=0.15, relheight=0.08, anchor='center')
@@ -247,13 +284,13 @@ def rank_order(question, all_questions, current_user, score, total, score_lbl, q
             
         if correct:
             correct_lbl = tk.Label(question.root, text="Correct")
-            correct_lbl.place(relx=0.5, rely=0.3, anchor='center')
+            correct_lbl.place(relx=0.2, rely=0.65, anchor='center')
             score += question.difficulty
             score_lbl.config(text=f"{score}/{total}")
             submit_btn.config(text="Next", command=lambda: new_question(score, total, score_lbl, correct_lbl, question.root, question_num, question_num_lbl, amount_of_questions, score_header_lbl, question_num_header_lbl), bg="spring green")
         else: 
             incorrect_lbl = tk.Label(question.root, text="Incorrect")
-            incorrect_lbl.place(relx=0.5, rely=0.3, anchor='center')
+            incorrect_lbl.place(relx=0.2, rely=0.65, anchor='center')
             submit_btn.config(text="Next", command=lambda: new_question(score, total, score_lbl, incorrect_lbl, question.root, question_num, question_num_lbl, amount_of_questions, score_header_lbl, question_num_header_lbl), bg="red")
 
 def give_question(all_questions, current_user, score, total, score_lbl, root, question_num, question_num_lbl, amount_of_questions, score_header_lbl, question_num_header_lbl):

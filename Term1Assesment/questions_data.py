@@ -1,57 +1,78 @@
 QUESTIONS = [
     {"question_id": 1,
-     "question_text": "How many days in a week?",
-     "difficulty": 2,
-     "type_of_question": "multi",
-     "answer": "7",
-     "choices": [
-         "1",
-         "3",
-         "7",
-         "10"
-     ]
-     },
-     {"question_id": 2,
-     "question_text": "How many months in a year?",
+     "question_text": "Which data type dosn't exist?",
      "difficulty": 1,
      "type_of_question": "multi",
-     "answer": "12",
+     "answer": "Text",
      "choices": [
-         "1",
-         "3",
-         "7",
-         "12"
+         "Text",
+         "Bool",
+         "Date and Time",
+         "Real"
      ]
      },
+     
+     {"question_id": 2,
+     "question_text": "What is a list?",
+     "difficulty": 2,
+     "type_of_question": "multi",
+     "answer": "An ordered collection of items which can be indexed and changed",
+     "choices": [
+         "A data structure that pairs keys with values",
+         "A sequence of characters used in computing",
+         "An ordered collection of items which can be indexed and changed",
+         "A fixed-size collection of elements of the same data type"
+     ]
+     },
+     
      {"question_id": 3,
-     "question_text": "How many years in a century?",
+     "question_text": "What is the purpose of a data structure?",
      "difficulty": 3,
      "type_of_question": "multi",
-     "answer": "100",
+     "answer": "To organize and manage data efficiently",
      "choices": [
-         "10",
-         "30",
-         "100",
-         "1000"
+         "To enhance the visual appeal of data in user interfaces",
+         "To organize and manage data efficiently",
+         "To increase the complexity of software programs",
+         "To transmit data over the internet"
      ]
      },
+     
      {"question_id": 4,
-     "question_text": "Hash  _ _ _ _ _?",
-     "difficulty": 3,
+     "question_text": "A  _ _ _ _  table is a structure that can map keys to values.",
+     "difficulty": 2,
      "type_of_question": "fill",
-     "answer": "table",
+     "answer": "hash",
      },
+     
      {"question_id": 5,
-     "question_text": "Rank in Order?",
-     "difficulty": 3,
+     "question_text": "What is $$$$ as an int?",
+     "difficulty": 2,
+     "type_of_question": "fill",
+     "answer": "",
+     },
+     {"question_id": 6,
+     "question_text": "Rank these fundamental software development steps",
+     "difficulty": 2,
      "type_of_question": "rank",
-     "answer": ["1", "2", "3", "4"],
+     "answer": ["Requirements Definition", "Determining Specifications", "Design", "Development", "Integration", "Testing and Debugging", "Installation", "Maintenance"],
      "choices": [
-         "1",
-         "2",
-         "3",
-         "4"
+         "Requirements Definition",
+         "Determining Specifications",
+         "Design",
+         "Development",
+         "Integration",
+         "Testing and Debugging",
+         "Installation",
+         "Maintenance"
      ]
+     },
+     {"question_id": 7,
+     "question_text": "What is $ in binary?",
+     "difficulty": 3,
+     "type_of_question": "multi",
+     "answer": "",
+     "choices": []
      }
 
 ]
