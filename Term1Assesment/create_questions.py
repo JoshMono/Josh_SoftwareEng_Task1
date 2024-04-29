@@ -312,11 +312,12 @@ def give_question(all_questions, current_user, score, total, score_lbl, root, qu
         grade_lbl.place(relx=0.7, rely=0.5, anchor="center")
         # from user_menu import create_user_interface
         # create_user_interface(root, current_user)
-        start_test_btn = tk.Button(root, text="Menu", command=lambda: back_to_menu(root, current_user))
-        start_test_btn.place(relx=0.5, rely=0.63, anchor="center")
+        meun_btn = tk.Button(root, text="Menu", command=lambda: back_to_menu(root, current_user))
+        meun_btn.place(relx=0.5, rely=0.63, anchor="center")
 
         def back_to_menu(root, current_user):
             header_lbl.destroy()
+            meun_btn.destroy()
             score_header_lbl.destroy()
             score_lbl.destroy()
             percent_header_lbl.destroy()

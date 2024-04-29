@@ -1,6 +1,7 @@
 from math import e
 import tkinter as tk
 from tkinter.ttk import Treeview
+from tkinter import messagebox
 from create_questions import main
 import matplotlib
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
@@ -73,13 +74,14 @@ def create_user_interface(root, current_user):
     graph_lbl.place(relx=0.24, rely=0.27)
 
     def run_questions(root, current_user):
-        welcome_lbl.destroy()
-        mark_list_tree.destroy()
-        start_test_btn.destroy()
-        canvas.get_tk_widget().destroy()
-        marks_lbl.destroy()
-        attemps_lbl.destroy()
-        graph_lbl.destroy()
-        quit_btn.destroy()
-        main(root, current_user)
+        if tk.messagebox.askquestion(title="Test Agreements", message="Do you agree that this test will be your own work?") == 'yes':
+            welcome_lbl.destroy()
+            mark_list_tree.destroy()
+            start_test_btn.destroy()
+            canvas.get_tk_widget().destroy()
+            marks_lbl.destroy()
+            attemps_lbl.destroy()
+            graph_lbl.destroy()
+            quit_btn.destroy()
+            main(root, current_user)
         
