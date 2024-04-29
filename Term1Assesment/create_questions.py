@@ -45,15 +45,22 @@ def main(root, current_user):
     for question in all_questions:
         total += question.difficulty
         
+    score_header_lbl = tk.Label(root, text=f"Score")
+    score_header_lbl.place(relx=0.76, rely=0.1, anchor='center')
+
+    question_num_header_lbl = tk.Label(root, text=f"Question")
+    question_num_header_lbl.place(relx=0.9, rely=0.1, anchor='center')
+
     score_lbl = tk.Label(root, text=f"{score}/{total}")
-    score_lbl.place(relx=0.9, rely=0.1)
+    score_lbl.place(relx=0.76, rely=0.15, anchor='center')
     
+    question_num_lbl = tk.Label(root, text=f"20/20")
+    question_num_lbl.place(relx=0.9, rely=0.15, anchor='center')
     
-    
-    give_question(all_questions, current_user, score, total, score_lbl, root)
+    give_question(all_questions, current_user, score, total, score_lbl, root, 0, question_num_lbl, len(all_questions))
 
 
-def multiple_choice(question, all_questions, current_user, score, total, score_lbl):
+def multiple_choice(question, all_questions, current_user, score, total, score_lbl, question_num, question_num_lbl, amount_of_questions):
     
     question_lbl = tk.Label(question.root, text=question.question_text, font=30)
     question_lbl.place(relx=0.5, rely=0.3, anchor='center')
@@ -72,6 +79,11 @@ def multiple_choice(question, all_questions, current_user, score, total, score_l
     answer_4 = tk.Radiobutton(question.root, text="Option 4", variable=group, tristatevalue=0)
     answer_4.place(relx=0.8, rely=0.6, anchor='center')
     
+    mark_lbl = tk.Label(question.root, text=f"Difficulty")
+    mark_lbl.place(relx=0.1, rely=0.1, anchor='center')
+    mark_score_lbl = tk.Label(question.root, text=f"{question.difficulty}/3")
+    mark_score_lbl.place(relx=0.1, rely=0.15, anchor='center')
+
     radio_list = [answer_1, answer_2, answer_3, answer_4]
     temp_choices = question.choices.copy()
 
@@ -82,20 +94,22 @@ def multiple_choice(question, all_questions, current_user, score, total, score_l
         temp_answer = temp_choices.pop(random2_num)
         radio_btn.config(text=f"{temp_answer}", value=f"{temp_answer}")
         
-    submit_btn = tk.Button(question.root, text="Submit", command=lambda: submit_value(question, group.get(), score, total, score_lbl))
+    submit_btn = tk.Button(question.root, text="Submit", command=lambda: submit_value(question, group.get(), score, total, score_lbl, question_num, question_num_lbl, amount_of_questions))
     submit_btn.place(relx=0.5, rely=0.75, relwidth=0.11, relheight=0.08, anchor="center")
     
-    def new_question(score, total, score_lbl, correct_lbl, root):
-        give_question(all_questions, current_user, score, total, score_lbl, root)
+    def new_question(score, total, score_lbl, correct_lbl, root, question_num, question_num_lbl, amount_of_questions):
+        give_question(all_questions, current_user, score, total, score_lbl, root, question_num, question_num_lbl, amount_of_questions)
         submit_btn.destroy()
         answer_1.destroy()
         answer_2.destroy()
         answer_3.destroy()
         answer_4.destroy()
         question_lbl.destroy()
+        mark_lbl.destroy()
+        mark_score_lbl.destroy()
         correct_lbl.destroy()
         
-    def submit_value(question, selected, score, total, score_lbl):
+    def submit_value(question, selected, score, total, score_lbl, question_num, question_num_lbl, amount_of_questions):
         if selected == '':
             tk.messagebox.showwarning("Info", "You must answer the question")
             
@@ -104,16 +118,16 @@ def multiple_choice(question, all_questions, current_user, score, total, score_l
             correct_lbl.place(relx=0.5, rely=0.5, anchor='center')
             score += question.difficulty
             score_lbl.config(text=f"{score}/{total}")
-            submit_btn.config(text="Next", command=lambda: new_question(score, total, score_lbl, correct_lbl, question.root), bg="spring green")
+            submit_btn.config(text="Next", command=lambda: new_question(score, total, score_lbl, correct_lbl, question.root, question_num, question_num_lbl, amount_of_questions), bg="spring green")
         
         else:
             incorrect_lbl = tk.Label(question.root, text="Incorrect")
             incorrect_lbl.place(relx=0.5, rely=0.5, anchor='center')
-            submit_btn.config(text="Next", command=lambda: new_question(score, total, score_lbl, incorrect_lbl, question.root), bg="red")
+            submit_btn.config(text="Next", command=lambda: new_question(score, total, score_lbl, incorrect_lbl, question.root, question_num, question_num_lbl, amount_of_questions), bg="red")
             
         
     
-def fill_blank(question, all_questions, current_user, score, total, score_lbl):
+def fill_blank(question, all_questions, current_user, score, total, score_lbl, question_num, question_num_lbl, amount_of_questions):
     title_lbl = tk.Label(question.root, text="Fill in the Blank", font=30)
     title_lbl.place(relx=0.5, rely=0.2, anchor='center')
     
@@ -123,10 +137,15 @@ def fill_blank(question, all_questions, current_user, score, total, score_lbl):
     answer_field = tk.Entry(question.root)
     answer_field.place(relx=0.5, rely=0.6, relwidth=0.12, anchor='center')
     
-    submit_btn = tk.Button(question.root, text="Submit", command=lambda: submit_value(question, score, total, score_lbl))
+    mark_lbl = tk.Label(question.root, text=f"Difficulty")
+    mark_lbl.place(relx=0.1, rely=0.1, anchor='center')
+    mark_score_lbl = tk.Label(question.root, text=f"{question.difficulty}/3")
+    mark_score_lbl.place(relx=0.1, rely=0.15, anchor='center')
+    
+    submit_btn = tk.Button(question.root, text="Submit", command=lambda: submit_value(question, score, total, score_lbl, question_num, question_num_lbl, amount_of_questions))
     submit_btn.place(relx=0.5, rely=0.75, relwidth=0.11, relheight=0.08, anchor="center")
     
-    def submit_value(question, score, total, score_lbl):
+    def submit_value(question, score, total, score_lbl, question_num, question_num_lbl, amount_of_questions):
         if answer_field.get() == '':
             tk.messagebox.showwarning("Info", "You must answer the question")
         elif question.answer == answer_field.get().lower():
@@ -134,21 +153,23 @@ def fill_blank(question, all_questions, current_user, score, total, score_lbl):
             correct_lbl.place(relx=0.5, rely=0.5, anchor='center')
             score += question.difficulty
             score_lbl.config(text=f"{score}/{total}")
-            submit_btn.config(text="Next", command=lambda: new_question(score, total, score_lbl, correct_lbl, question.root), bg="spring green")
+            submit_btn.config(text="Next", command=lambda: new_question(score, total, score_lbl, correct_lbl, question.root, question_num, question_num_lbl, amount_of_questions), bg="spring green")
         else:
             incorrect_lbl = tk.Label(question.root, text="Incorrect")
             incorrect_lbl.place(relx=0.5, rely=0.5, anchor='center')
-            submit_btn.config(text="Next", command=lambda: new_question(score, total, score_lbl, incorrect_lbl, question.root), bg="red")
+            submit_btn.config(text="Next", command=lambda: new_question(score, total, score_lbl, incorrect_lbl, question.root, question_num, question_num_lbl, amount_of_questions), bg="red")
             
-    def new_question(score, total, score_lbl, correct_lbl, root):
-        give_question(all_questions, current_user, score, total, score_lbl, root)
+    def new_question(score, total, score_lbl, correct_lbl, root, question_num, question_num_lbl, amount_of_questions):
+        give_question(all_questions, current_user, score, total, score_lbl, root, question_num, question_num_lbl, amount_of_questions)
         submit_btn.destroy()
         answer_field.destroy()
         question_lbl.destroy()
+        mark_lbl.destroy()
+        mark_score_lbl.destroy()
         title_lbl.destroy()
         correct_lbl.destroy()
 
-def rank_order(question, all_questions, current_user, score, total, score_lbl):
+def rank_order(question, all_questions, current_user, score, total, score_lbl, question_num, question_num_lbl, amount_of_questions):
     title_lbl = tk.Label(question.root, text="Rank in Order", font=30)
     title_lbl.place(relx=0.5, rely=0.2, anchor='center')
     
@@ -161,6 +182,11 @@ def rank_order(question, all_questions, current_user, score, total, score_lbl):
     choice_tree['show'] = 'headings'
     choice_tree.column('1', anchor='w', width=30)
     choice_tree.heading('1', text='Rank Order', anchor='center')
+
+    mark_lbl = tk.Label(question.root, text=f"Difficulty")
+    mark_lbl.place(relx=0.1, rely=0.1, anchor='center')
+    mark_score_lbl = tk.Label(question.root, text=f"{question.difficulty}/3")
+    mark_score_lbl.place(relx=0.1, rely=0.15, anchor='center')
     
     choices_list = question.choices.copy()
     
@@ -175,7 +201,7 @@ def rank_order(question, all_questions, current_user, score, total, score_lbl):
     move_down_btn = tk.Button(question.root, text="Move Down", command=lambda: move_down())
     move_down_btn.place(relx=0.2, rely=0.75, relwidth=0.15, relheight=0.08, anchor='center')
     
-    submit_btn = tk.Button(question.root, text="Submit", command=lambda: submit(score, total, score_lbl))
+    submit_btn = tk.Button(question.root, text="Submit", command=lambda: submit(score, total, score_lbl, question_num, question_num_lbl, amount_of_questions))
     submit_btn.place(relx=0.8, rely=0.65, relwidth=0.15, relheight=0.08, anchor='center')
 
     def move_up():
@@ -192,7 +218,7 @@ def rank_order(question, all_questions, current_user, score, total, score_lbl):
         except:
             tk.messagebox.showwarning("Info", "You must select a row")
     
-    def new_question(score, total, score_lbl, correct_lbl, root):
+    def new_question(score, total, score_lbl, correct_lbl, root, question_num, question_num_lbl, amount_of_questions):
         title_lbl.destroy()
         question_lbl.destroy()
         choice_tree.destroy()
@@ -200,9 +226,11 @@ def rank_order(question, all_questions, current_user, score, total, score_lbl):
         move_down_btn.destroy()
         move_up_btn.destroy()
         submit_btn.destroy()
-        give_question(all_questions, current_user, score, total, score_lbl, root)
+        mark_lbl.destroy()
+        mark_score_lbl.destroy()
+        give_question(all_questions, current_user, score, total, score_lbl, root, question_num, question_num_lbl, amount_of_questions)
 
-    def submit(score, total, score_lbl):
+    def submit(score, total, score_lbl, question_num, question_num_lbl, amount_of_questions):
         all_choices = choice_tree.get_children()
         answer_choices = question.choices
         num = 0
@@ -221,15 +249,16 @@ def rank_order(question, all_questions, current_user, score, total, score_lbl):
             correct_lbl.place(relx=0.5, rely=0.3, anchor='center')
             score += question.difficulty
             score_lbl.config(text=f"{score}/{total}")
-            submit_btn.config(text="Next", command=lambda: new_question(score, total, score_lbl, correct_lbl, question.root), bg="spring green")
+            submit_btn.config(text="Next", command=lambda: new_question(score, total, score_lbl, correct_lbl, question.root, question_num, question_num_lbl, amount_of_questions), bg="spring green")
         else: 
             incorrect_lbl = tk.Label(question.root, text="Incorrect")
             incorrect_lbl.place(relx=0.5, rely=0.3, anchor='center')
-            submit_btn.config(text="Next", command=lambda: new_question(score, total, score_lbl, incorrect_lbl, question.root), bg="red")
+            submit_btn.config(text="Next", command=lambda: new_question(score, total, score_lbl, incorrect_lbl, question.root, question_num, question_num_lbl, amount_of_questions), bg="red")
 
-def give_question(all_questions, current_user, score, total, score_lbl, root):
+def give_question(all_questions, current_user, score, total, score_lbl, root, question_num, question_num_lbl, amount_of_questions):
     if len(all_questions) == 0:
         score_lbl.config(text=f"{score}/{total}")
+        question_num_lbl.config(text=f"{question_num}/{amount_of_questions}")
         current_user['marks'].append(score)
         
         import json
@@ -248,11 +277,13 @@ def give_question(all_questions, current_user, score, total, score_lbl, root):
         from user_menu import create_user_interface
         create_user_interface(root, current_user)
     else:
+        question_num += 1
         score_lbl.config(text=f"{score}/{total}")
+        question_num_lbl.config(text=f"{question_num}/{amount_of_questions}")
         random_num = rand.randint(0, len(all_questions) - 1)
         question = all_questions.pop(random_num)
         func, self = question.get_question_type()
-        func(self, all_questions, current_user, score, total, score_lbl)
+        func(self, all_questions, current_user, score, total, score_lbl, question_num, question_num_lbl, amount_of_questions)
 
 
 
