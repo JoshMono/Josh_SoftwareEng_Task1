@@ -23,16 +23,16 @@ def create_user_interface(root, current_user):
     mark_list_tree.heading('3', text='Grade', anchor='center')
     
     def get_grade(mark):
-        if mark >= 12 * 0.9:
+        if mark >= 40 * 0.9:
             return "A"
         
-        elif mark >= 12 * 0.75:
+        elif mark >= 40 * 0.75:
             return "B"
         
-        elif mark >= 12 * 0.60:
+        elif mark >= 40 * 0.60:
             return "C"
 
-        elif mark >= 12 * 0.35:
+        elif mark >= 40 * 0.35:
             return "D"
         
         else:
@@ -40,7 +40,7 @@ def create_user_interface(root, current_user):
 
     i=1
     for mark in current_user["marks"]:
-       mark_list_tree.insert("", 'end', values=(i, f"{round(mark/12*100)}%", get_grade(mark)))
+       mark_list_tree.insert("", 'end', values=(i, f"{round(mark/40*100)}%", get_grade(mark)))
        i+=1
        
 

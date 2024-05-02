@@ -6,8 +6,6 @@ from tkinter.ttk import Treeview
 import random as rand
 from tkinter import messagebox
 
-from numpy import number
-
 
 
 class Question:
@@ -322,22 +320,22 @@ def give_question(all_questions, current_user, score, total, score_lbl, root, qu
         score_lbl.config(text=f"{score}/{total}")
         
         percent_header_lbl = tk.Label(root, text="Percent")
-        percent_lbl = tk.Label(root, text=f"{round(score/12*100)}%")
+        percent_lbl = tk.Label(root, text=f"{round(score/40*100)}%")
         percent_header_lbl.place(relx=0.5, rely=0.43, anchor="center")
         percent_lbl.place(relx=0.5, rely=0.5, anchor="center")
         
         
         def get_grade(mark):
-                if mark >= 12 * 0.9:
+                if mark >= 40 * 0.9:
                     return "A"
         
-                elif mark >= 12 * 0.75:
+                elif mark >= 40 * 0.75:
                     return "B"
         
-                elif mark >= 12 * 0.60:
+                elif mark >= 40 * 0.60:
                     return "C"
 
-                elif mark >= 12 * 0.35:
+                elif mark >= 40 * 0.35:
                     return "D"
         
                 else:
