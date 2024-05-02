@@ -214,7 +214,7 @@ QUESTIONS = [
      },
      
      {"question_id": 19,
-     "question_text": "A _ _ _ _ _ is a data structure that follows the Last-In-First-Out",
+     "question_text": "A ___ works on the LIFO process Last In First Out",
      "difficulty": 3,
      "type_of_question": "multi",
      "answer": "Stack",

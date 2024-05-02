@@ -87,7 +87,6 @@ def multiple_choice(question, all_questions, current_user, score, total, score_l
                     temp_num = rand.randint(0,1)
                     temp_ans += str(temp_num)
                 if temp_ans == answer or temp_ans in question.choices:
-                    print(temp_ans)
                     temp_ans = ""
                 else:
                     a = False

@@ -103,8 +103,7 @@ def login(login_btn, create_btn, title_lbl, root):
                 # Runs if all boxes arn't filled out
             else:
                 tk.messagebox.showwarning("Info", "You need to fill out all of the forms")
-        except Exception as e:
-            print(e)
+        except:
             # Runs when somthing crashes most likely reason for it to crash is nothing in the database
             tk.messagebox.showerror("Error", "There was an error logging you in try creating an account")
 

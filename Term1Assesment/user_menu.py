@@ -6,6 +6,7 @@ from create_questions import main
 import matplotlib
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from matplotlib.figure import Figure
+import sys
 
 
 # Creats the user interface screen
@@ -55,7 +56,7 @@ def create_user_interface(root, current_user):
     start_test_btn.place(relx=0.05, rely=0.18)
     
     # Closes program on click
-    quit_btn = tk.Button(root, text="Quit", command=lambda: root.destroy())
+    quit_btn = tk.Button(root, text="Quit", command=lambda: sys.exit())
     quit_btn.place(relx=0.2, rely=0.18)
     
     # Loops through all the marks and adds them to a list for the graph
