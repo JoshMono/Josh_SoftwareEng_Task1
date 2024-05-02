@@ -189,13 +189,13 @@ QUESTIONS = [
      "question_text": "Rank theses binary numbers from largest to smallest (Top to bottom)",
      "difficulty": 2,
      "type_of_question": "rank",
-     "answer": ["1101", "1011", "0110", "0101", "0010"],
+     "answer": ["1111", "1110", "1101", "1100", "1011"],
      "choices": [
+         "1111",
+         "1110",
          "1101",
-         "1011",
-         "0110",
-         "0101",
-         "0010"
+         "1100",
+         "1011"
      ]
      },
      
