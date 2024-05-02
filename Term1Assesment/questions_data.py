@@ -1,3 +1,5 @@
+# Question data layout is layed out in this way for easy readability and simplicity
+
 QUESTIONS = [
     {"question_id": 1,
      "question_text": "Which data type dosn't exist?",
