@@ -5,6 +5,7 @@ import tkinter as tk
 from tkinter.ttk import Treeview
 import random as rand
 from tkinter import messagebox
+from bitstring import Bits
 
 
 # Create Questions Class
@@ -75,8 +76,8 @@ def multiple_choice(question, all_questions, current_user, score, total, score_l
     if question.question_text.__contains__('$'):
         # Gets random num and sets answer to a random binary number
         number_answer = rand.randint(0,255)
-        answer = str(format(number_answer, '#010b')).replace("0b", "")
-        question.question_text = question.question_text.replace("$", str(number_answer))
+        answer = Bits(bin=str(bin(number_answer)))
+        question.question_text = question.question_text.replace("$", str(answer.int))
         question.choices = []
         # Gives 3 other random binary options
         for i in range(3):
@@ -86,14 +87,14 @@ def multiple_choice(question, all_questions, current_user, score, total, score_l
                 for _ in range(8):
                     temp_num = rand.randint(0,1)
                     temp_ans += str(temp_num)
-                if temp_ans == answer or temp_ans in question.choices:
+                if temp_ans == answer.bin or temp_ans in question.choices:
                     temp_ans = ""
                 else:
                     a = False
                     question.choices.append(temp_ans)
 
-        question.choices.append(answer)
-        question.answer = answer
+        question.choices.append(answer.bin)
+        question.answer = answer.bin
 
 
     # Creates widgets
@@ -175,12 +176,10 @@ def multiple_choice(question, all_questions, current_user, score, total, score_l
 def fill_blank(question, all_questions, current_user, score, total, score_lbl, question_num, question_num_lbl, amount_of_questions, score_header_lbl, question_num_header_lbl):
     # If question contains $$$$ then replaces $$$$ with a random binary num and sets answer to the int of that num
     if question.question_text.__contains__('$$$$'):
-        new_binary_num = ""
-        for i in range(4):
-            temp_num = rand.randint(0,1)
-            new_binary_num += str(temp_num)
-        question.question_text = question.question_text.replace("$$$$", new_binary_num)
-        question.answer = str(int(new_binary_num, 2))
+        
+        answer = Bits(bin=str(bin(rand.randint(0,16))))
+        question.question_text = question.question_text.replace("$$$$", answer.bin)
+        question.answer = str(answer.int)
         
     # Creates widgets
     title_lbl = tk.Label(question.root, text="Fill in the Blank", font=30)
@@ -215,7 +214,8 @@ def fill_blank(question, all_questions, current_user, score, total, score_lbl, q
             score += question.difficulty
             score_lbl.config(text=f"{score}/{total}")
             submit_btn.config(text="Next", command=lambda: new_question(score, total, score_lbl, correct_lbl, question.root, question_num, question_num_lbl, amount_of_questions, score_header_lbl, question_num_header_lbl), bg="spring green")
-        
+            
+
         # Shows incorrect and changes submit_btn to runs new_question
         else:
             incorrect_lbl = tk.Label(question.root, text="Incorrect")

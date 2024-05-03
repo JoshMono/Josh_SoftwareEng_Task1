@@ -94,7 +94,7 @@ QUESTIONS = [
      "choices": [
          "A method used to create intricate paper designs",
          "A project management approach used in software development",
-         "A specific programming language used for web development",
+         "A specific programming language used for web development", 
          "A form of database modeling technique"
                 
      ]
@@ -189,13 +189,14 @@ QUESTIONS = [
      "question_text": "Rank theses binary numbers from largest to smallest (Top to bottom)",
      "difficulty": 2,
      "type_of_question": "rank",
-     "answer": ["1111", "1110", "1101", "1100", "1011"],
+     "answer": ["1011", "1100", "1101", "1110", "1111"],
      "choices": [
-         "1111",
-         "1110",
-         "1101",
+         "1011",
          "1100",
-         "1011"
+         "1101",
+         "1110",
+         "1111"
+         
      ]
      },
      
@@ -203,13 +204,14 @@ QUESTIONS = [
      "question_text": "Rank theses binary numbers from largest to smallest (Top to bottom)",
      "difficulty": 3,
      "type_of_question": "rank",
-     "answer": ["1110 1101", "1011 1011", "1011 1010", "1001 1001", "1000 1000"],
+     "answer": ["1000 1000", "1001 1001", "1011 1010", "1011 1011", "1110 1101"],
      "choices": [
-         "1110 1101",
-         "1011 1011",
-         "1011 1010",
+         "1000 1000",
          "1001 1001",
-         "1000 1000"
+         "1011 1010",
+         "1011 1011",
+         "1110 1101"
+         
      ]
      },
      
